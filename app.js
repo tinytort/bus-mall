@@ -38,12 +38,18 @@ var displayPhoto = function (photos, id, index) {
 }
 
 var displayPhotos = function (photos) {
+    if (totalClicks === 25) {
+        alert('Thanks for voting!');
+        return;
+} 
+   
     var indices = getIndices(photos);
 
     console.log(photos);
     displayPhoto(photos, 'photoOne', indices[0]);
     displayPhoto(photos, 'photoTwo', indices[1]);
     displayPhoto(photos, 'photoThree', indices[2]);
+   
 }
 
 
@@ -68,12 +74,13 @@ var randomIndex = function (arr) {
 
 displayPhotos(photos);
 
+var totalClicks = 0
 
 var photoOne = document.getElementById('photoOne');
 photoOne.addEventListener('click', voteHandler);
 function voteHandler() {
    photos[this.alt].timesClicked ++;
-   console.log(photos[this.alt]);
+   totalClicks += 1;
    displayPhotos(photos);
 }
 
@@ -82,7 +89,7 @@ var photoTwo = document.getElementById('photoTwo');
 photoTwo.addEventListener('click', voteHandler);
 function voteHandler() {
     photos[this.alt].timesClicked ++;
-    console.log(photos[this.alt]);
+    totalClicks += 1;
     displayPhotos(photos);
 }
 
@@ -90,13 +97,12 @@ var photoThree = document.getElementById('photoThree');
 photoThree.addEventListener('click', voteHandler);
 function voteHandler() {
     photos[this.alt].timesClicked ++;
-    console.log(photos[this.alt]);
+    totalClicks += 1;
     displayPhotos(photos);
 }
 
 
-// for (numberOfVotes = 0; numberOfVotes < 25; numberOfVotes++) {
-//     if (voteHandler === 25) {
-//         alert('Thanks for voting!');
-//     }
-// }
+var clickedVotes = (photoOne.timesClicked + photoTwo.timesClicked + photoThree.timesClicked);
+
+
+
