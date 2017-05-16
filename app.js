@@ -1,5 +1,12 @@
 'use strict';
 
+function Image(name, filepath) {
+    this.name = name;
+    this.filepath = filepath;
+    this.timesShown = 0;
+    this.timesClicked = 0;
+};
+
 var photos = [
     new Image('Bag Photo', './images/bag.jpg'),
     new Image('Banana Photo','./images/banana.jpg'),
@@ -26,6 +33,8 @@ var photos = [
 var displayPhoto = function (photos, id, index) {
     var photoOne = document.getElementById(id);
     photoOne.src = photos[index].filepath;
+    photos[index].timesShown ++;
+    photoOne.alt = index;
 }
 
 var displayPhotos = function (photos) {
@@ -38,12 +47,14 @@ var displayPhotos = function (photos) {
 }
 
 
+var photoIndices = [];
 var getIndices = function (arr) {
-    var photoIndices = [];
+    var lastArray = photoIndices;
+    photoIndices= [];
     while (photoIndices.length < 3) {
         var index = randomIndex(arr);
 
-        if (photoIndices.indexOf(index) === -1) {
+        if (photoIndices.indexOf(index) === -1 && lastArray.indexOf(index)=== -1) {
             photoIndices.push(index);
         }
 
@@ -57,37 +68,35 @@ var randomIndex = function (arr) {
 
 displayPhotos(photos);
 
-function Image(name, filepath) {
-    this.name = name;
-    this.filepath = filepath;
-    this.timesShown = 0;
-    this.timesClicked = 0;
-};
 
+var photoOne = document.getElementById('photoOne');
 photoOne.addEventListener('click', voteHandler);
 function voteHandler() {
-    var gettingClicks = document.getElementById('photoOne');
-    console.log('clicked it');
-    if (photoOne === true) {
-    timesClicked += 1;
-    }
+   photos[this.alt].timesClicked ++;
+   console.log(photos[this.alt]);
+   displayPhotos(photos);
 }
 
+
+var photoTwo = document.getElementById('photoTwo');
 photoTwo.addEventListener('click', voteHandler);
 function voteHandler() {
-    var gettingClicks = document.getElementById('photoTwo');
-    console.log('clicked it');
+    photos[this.alt].timesClicked ++;
+    console.log(photos[this.alt]);
+    displayPhotos(photos);
 }
 
+var photoThree = document.getElementById('photoThree');
 photoThree.addEventListener('click', voteHandler);
 function voteHandler() {
-    var gettingClicks = document.getElementById('photoThree');
-    console.log('clicked it');
+    photos[this.alt].timesClicked ++;
+    console.log(photos[this.alt]);
+    displayPhotos(photos);
 }
 
 
-for (numberOfVotes = 0; numberOfVotes < 25; numberOfVotes++) {
-    if (voteHandler === 25) {
-        alert('Thanks for voting!');
-    }
-}
+// for (numberOfVotes = 0; numberOfVotes < 25; numberOfVotes++) {
+//     if (voteHandler === 25) {
+//         alert('Thanks for voting!');
+//     }
+// }
