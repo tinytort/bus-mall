@@ -1,6 +1,6 @@
 'use strict';
 
-var totalClicks = 0
+var totalClicks = 0;
 
 function Image(name, filepath) {
     this.name = name;
@@ -37,13 +37,36 @@ var displayPhoto = function (photos, id, index) {
     photoOne.src = photos[index].filepath;
     photos[index].timesShown++;
     photoOne.alt = index;
-}
+};
 
 var displayPhotos = function (photos) {
     if (totalClicks === 25) {
+        var canvas = document.getElementById('votes').getContext('2d');
+
+        var barData = {
+            type: 'bar',
+            data: {
+                labels: ['Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum', 'Chair', 'Cthulhu', 'Dog-Duck', 'Dragon', 'Pen', 'Pet-Sweet', 'Scissors', 'Shark', 'Sweep', 'Tauntaun', 'Unicorn', 'USB', 'Water-Can', 'Wine-Glass'],
+                datasets: [
+                    {
+                        fillColor: 'blue',
+                        strokeColor: 'grey',
+                        data: []
+                    }
+                ]
+
+            }
+        }
+
+
+        for (var i = 0; i < photos.length; i++) {
+            barData.data.datasets[0].data.push(photos[i].timesClicked);
+        }
         alert('Thanks for voting!');
+        console.log(barData);
+        new Chart(canvas, barData);
         return;
-    showResults();
+        showResults();
     }
 
     var indices = getIndices(photos);
@@ -53,13 +76,13 @@ var displayPhotos = function (photos) {
     displayPhoto(photos, 'photoTwo', indices[1]);
     displayPhoto(photos, 'photoThree', indices[2]);
 
-}
+};
 
-function showResults () {
+function showResults() {
     for (var i = 0; i < photos.length; i++) {
         console.log(photos[i].name + 'received' + photos[i].timesClicked);
     }
-}
+};
 
 var photoIndices = [];
 var getIndices = function (arr) {
@@ -78,7 +101,7 @@ var getIndices = function (arr) {
 
 var randomIndex = function (arr) {
     return Math.floor(Math.random() * arr.length);
-}
+};
 
 displayPhotos(photos);
 
@@ -111,31 +134,9 @@ function voteHandler() {
 
 
 
-// var section = document.getElementById('hellaPhotos');
-// section.addEventListener('click', handler);
-// function handler () {
-//     console.log(event.target.alt);
-// }
-
-
-
-// var canvas = document.getElementById('votes').getContext('2d');
-// new Chart(votes).Bar(barData);
-
-// var barData = {
-//     labels: ['Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum', 'Chair', 'Cthulhu', 'Dog-Duck', 'Dragon', 'Pen', 'Pet-Sweet', 'Scissors', 'Shark', 'Sweep', 'Tauntaun', 'Unicorn', 'USB', 'Water-Can', 'Wine-Glass']
-//     datasets: [
-//         {
-//             fillColor: 'blue',
-//             strokeColor: 'grey',
-//             data: [
-
-//             ]
-//         }
-//     ]
-// }
 
 // photos.forEach(function (item)){
 //     var meow = item.timesClicked
 //     barData.datasets.push(meow)
 // }
+
