@@ -32,6 +32,28 @@ var photos = [
     new Image('WineGlass', './images/wine-glass.jpg'),
 ];
 
+// LOCAL STORAGE \\
+
+if (localStorage.length) {
+    var locVal = localStorage.getItem('photos');
+    console.log(locVal);
+
+    var realObj = JSON.parse(locVal);
+    photos = realObj;
+
+    console.log(realObj);
+}
+
+function setToLocal() {
+    console.log('setToLocal', photos);
+    var objSt = JSON.stringify(photos);
+
+    localStorage.setItem('photos', objSt);
+
+    console.log(localStorage);
+}
+
+
 var displayPhoto = function (photos, id, index) {
     var photoOne = document.getElementById(id);
     photoOne.src = photos[index].filepath;
@@ -61,12 +83,14 @@ var displayPhotos = function (photos) {
 
         for (var i = 0; i < photos.length; i++) {
             barData.data.datasets[0].data.push(photos[i].timesClicked);
+
         }
         alert('Thanks for voting!');
         console.log(barData);
         new Chart(canvas, barData);
-        return;
+        setToLocal();
         showResults();
+        return;
     }
 
     var indices = getIndices(photos);
@@ -77,6 +101,7 @@ var displayPhotos = function (photos) {
     displayPhoto(photos, 'photoThree', indices[2]);
 
 };
+
 
 function showResults() {
     for (var i = 0; i < photos.length; i++) {
