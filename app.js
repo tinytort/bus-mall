@@ -156,7 +156,7 @@ function voteHandler() {
     displayPhotos(photos);
 }
 
-
+..........
 
 
 
